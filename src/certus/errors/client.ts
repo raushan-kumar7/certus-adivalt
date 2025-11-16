@@ -14,7 +14,7 @@ export class CertusClientError extends CertusAdiValtError {
 }
 
 export class CertusValidationError extends CertusClientError {
-  constructor(message: string = 'Validation failed', context?: Record<string, unknown>) {
+  constructor(message: string = 'Validation failed', context: Record<string, unknown> = {}) {
     super(message, ErrorCodes.VAL_INVALID_INPUT, HttpStatus.UNPROCESSABLE_ENTITY, context);
     this.name = 'CertusValidationError';
   }

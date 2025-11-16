@@ -1,7 +1,7 @@
 import { ErrorCodes, HttpStatus } from '@/constants';
 import { ErrorContext } from '@/types';
 
-export abstract class CertusAdiValtError extends Error {
+export class CertusAdiValtError extends Error {
   public readonly code: string;
   public readonly statusCode: number;
   public readonly timestamp: Date;
