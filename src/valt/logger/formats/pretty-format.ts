@@ -1,5 +1,4 @@
-import { LogEntry, LogLevel } from '@/types';
-import { LoggerConfig } from '@/types';
+import { LogEntry, LogLevel, LoggerConfig } from '@/types';
 
 export class PrettyFormat {
   private colors = {
@@ -19,7 +18,7 @@ export class PrettyFormat {
     const level = LogLevel[entry.level].padEnd(5);
     const color = this.colors[entry.level] || this.reset;
 
-    let output = `${color}${timestamp} ${level} ${this.config.service}: ${entry.message}${this.reset}`;
+    let output = `${color}[${timestamp}] ${level} ${this.config.service}: ${entry.message}${this.reset}`;
 
     // Add context if present
     if (entry.context && Object.keys(entry.context).length > 0) {

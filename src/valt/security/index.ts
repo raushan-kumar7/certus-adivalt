@@ -1,1 +1,1 @@
-export * from "./data-redaction"
+export * from './data-redaction';

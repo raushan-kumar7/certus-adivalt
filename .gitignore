@@ -182,3 +182,10 @@ build/
 # Custom
 .qodo/
 requirements.txt
+examples
+
+test-build.js
+
+debug.js
+fix-imports.js
+demo.txt

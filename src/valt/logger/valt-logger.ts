@@ -14,7 +14,7 @@ export class ValtLogger {
       version: config.version || '1.0.0',
       redactFields: config.redactFields || [],
       prettyPrint: config.prettyPrint || false,
-      timestampFormat: config.timestampFormat || 'ISO'
+      timestampFormat: config.timestampFormat || 'ISO',
     };
 
     this.jsonFormat = new JsonFormat(this.config);
@@ -33,7 +33,7 @@ export class ValtLogger {
   ): LogEntry {
     const baseContext: any = {
       timestamp: new Date(),
-      ...context
+      ...context,
     };
 
     const logEntry: LogEntry = {
@@ -43,7 +43,7 @@ export class ValtLogger {
       service: this.config.service,
       environment: this.config.environment,
       version: this.config.version,
-      context: this.redactSensitiveData(context || {})
+      context: this.redactSensitiveData(context || {}),
     };
 
     if (error) {
@@ -51,8 +51,8 @@ export class ValtLogger {
         name: error.name,
         message: error.message,
         stack: this.config.environment === 'development' ? error.stack : undefined,
-        ...(error as any).code && { code: (error as any).code },
-        ...(error as any).statusCode && { statusCode: (error as any).statusCode }
+        ...((error as any).code && { code: (error as any).code }),
+        ...((error as any).statusCode && { statusCode: (error as any).statusCode }),
       };
     }
 
@@ -72,7 +72,7 @@ export class ValtLogger {
   }
 
   private writeLog(entry: LogEntry): void {
-    const formattedLog = this.config.prettyPrint 
+    const formattedLog = this.config.prettyPrint
       ? this.prettyFormat.format(entry)
       : this.jsonFormat.format(entry);
 
@@ -133,7 +133,7 @@ export class ValtLogger {
     try {
       const result = fn();
       if (result instanceof Promise) {
-        return result.then(res => {
+        return result.then((res) => {
           this.logDuration(operation, Date.now() - start, context);
           return res;
         }) as T;
@@ -146,19 +146,23 @@ export class ValtLogger {
     }
   }
 
-  private logDuration(operation: string, duration: number, context?: Record<string, unknown>): void {
+  private logDuration(
+    operation: string,
+    duration: number,
+    context?: Record<string, unknown>
+  ): void {
     if (!this.shouldLog(LogLevel.INFO)) return;
-    
+
     const level = duration > 1000 ? LogLevel.WARN : LogLevel.INFO;
     const message = `${operation} completed in ${duration}ms`;
-    
+
     const entry = this.createLogEntry(level, message, {
       ...context,
       operation,
       duration,
-      durationUnit: 'ms'
+      durationUnit: 'ms',
     });
-    
+
     this.writeLog(entry);
   }
 
@@ -166,14 +170,19 @@ export class ValtLogger {
   child(context: Record<string, unknown>): ValtLogger {
     const childConfig = {
       ...this.config,
-      service: this.config.service
+      service: this.config.service,
     };
 
     const childLogger = new ValtLogger(childConfig);
-    
+
     // Override createLogEntry to include parent context
     const originalCreateLogEntry = childLogger.createLogEntry.bind(childLogger);
-    childLogger.createLogEntry = (level: LogLevel, message: string, childContext?: Record<string, unknown>, error?: Error) => {
+    childLogger.createLogEntry = (
+      level: LogLevel,
+      message: string,
+      childContext?: Record<string, unknown>,
+      error?: Error
+    ) => {
       const mergedContext = { ...context, ...childContext };
       return originalCreateLogEntry(level, message, mergedContext, error);
     };

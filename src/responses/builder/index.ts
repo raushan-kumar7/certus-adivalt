@@ -1,1 +1,1 @@
-export * from "./response-builder"
+export * from './response-builder';

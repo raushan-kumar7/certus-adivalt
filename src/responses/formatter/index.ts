@@ -1,1 +1,1 @@
-export * from "./response-formatter"
+export * from './response-formatter';
