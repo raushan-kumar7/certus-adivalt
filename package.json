@@ -15,8 +15,9 @@
     "build:cjs": "tsc",
     "build:esm": "tsc --module es2020 --outDir dist/esm",
     "dev": "tsc --watch",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "vitest",
+    "test:certus": "vitest tests/certus",
+    "test:coverage": "vitest --coverage tests/certus",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write src/**/*.ts",
@@ -50,18 +51,29 @@
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
+    "@vitest/coverage-v8": "^4.0.10",
     "eslint": "^9.39.1",
     "express": "^5.1.0",
     "jest": "^30.2.0",
     "prettier": "^3.6.2",
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.10"
   },
   "peerDependencies": {
     "express": "^5.1.0"
   },
   "dependencies": {
     "module-alias": "^2.2.3"
+  },
+  "_moduleAliases": {
+    "@/types": "src/types",
+    "@/constants": "src/constants",
+    "@/certus": "src/certus",
+    "@/responses": "src/responses",
+    "@/valt": "src/valt",
+    "@/adi": "src/adi",
+    "@": "src"
   }
 }
