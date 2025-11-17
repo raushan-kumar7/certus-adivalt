@@ -20,7 +20,7 @@
     "test:adi": "vitest tests/adi",
     "test:responses": "vitest tests/responses",
     "test:valt": "vitest tests/valt",
-    "test:coverage": "vitest --coverage tests/valt",
+    "test:coverage": "vitest --coverage",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write src/**/*.ts",
