@@ -1,54 +1,15 @@
-// import { LogEntry, LoggerConfig, LogLevel } from '@/types';
-
-// export class JsonFormat {
-//   constructor(private config: Required<LoggerConfig>) {}
-
-//   format(entry: LogEntry): string {
-//     const formattedEntry = {
-//       timestamp: this.formatTimestamp(entry.timestamp),
-//       level: LogLevel[entry.level],
-//       service: entry.service,
-//       environment: entry.environment,
-//       version: entry.version,
-//       message: entry.message,
-//       ...(entry.context && { context: entry.context }),
-//       ...(entry.error && { error: entry.error }),
-//       ...(entry.duration && { duration: entry.duration }),
-//       ...(entry.requestId && { requestId: entry.requestId }),
-//       ...(entry.userId && { userId: entry.userId }),
-//       ...(entry.sessionId && { sessionId: entry.sessionId }),
-//     };
-
-//     return JSON.stringify(formattedEntry);
-//   }
-
-//   private formatTimestamp(timestamp: Date): string {
-//     switch (this.config.timestampFormat) {
-//       case 'ISO':
-//         return timestamp.toISOString();
-//       case 'UTC':
-//         return timestamp.toUTCString();
-//       case 'LOCAL':
-//         return timestamp.toLocaleString();
-//       default:
-//         return timestamp.toISOString();
-//     }
-//   }
-// }
-
-
 import { LogEntry, LoggerConfig, LogLevel } from '@/types';
 
 /**
  * JSON formatter for structured logging in the CertusAdiValt system.
- * 
+ *
  * Transforms LogEntry objects into JSON strings with consistent formatting,
  * timestamp normalization, and configurable output structure. Ensures all
  * log entries follow a standardized JSON format for easy parsing and analysis
  * by log aggregation systems.
- * 
+ *
  * @class JsonFormat
- * 
+ *
  * @example
  * ```typescript
  * // Create formatter with configuration
@@ -61,7 +22,7 @@ import { LogEntry, LoggerConfig, LogLevel } from '@/types';
  *   prettyPrint: false,
  *   timestampFormat: 'ISO'
  * });
- * 
+ *
  * // Format log entry
  * const logEntry: LogEntry = {
  *   timestamp: new Date(),
@@ -74,7 +35,7 @@ import { LogEntry, LoggerConfig, LogLevel } from '@/types';
  *   userId: 'user_789',
  *   context: { loginMethod: 'email', ip: '192.168.1.1' }
  * };
- * 
+ *
  * const jsonOutput = formatter.format(logEntry);
  * // Output: {"timestamp":"2024-01-15T10:30:00.000Z","level":"INFO","service":"user-service",...}
  * ```
@@ -82,9 +43,9 @@ import { LogEntry, LoggerConfig, LogLevel } from '@/types';
 export class JsonFormat {
   /**
    * Creates a new JSON formatter instance.
-   * 
+   *
    * @param {Required<LoggerConfig>} config - Required logger configuration
-   * 
+   *
    * @example
    * ```typescript
    * const config: Required<LoggerConfig> = {
@@ -96,7 +57,7 @@ export class JsonFormat {
    *   prettyPrint: true,
    *   timestampFormat: 'ISO'
    * };
-   * 
+   *
    * const formatter = new JsonFormat(config);
    * ```
    */
@@ -104,14 +65,14 @@ export class JsonFormat {
 
   /**
    * Formats a LogEntry into a JSON string with consistent structure.
-   * 
+   *
    * Transforms the log entry into a structured JSON object with all optional
    * fields included only when they have values. Ensures consistent field ordering
    * and handles timestamp formatting according to configuration.
-   * 
+   *
    * @param {LogEntry} entry - The log entry to format
    * @returns {string} JSON string representation of the log entry
-   * 
+   *
    * @example
    * ```typescript
    * // Basic log entry
@@ -123,7 +84,7 @@ export class JsonFormat {
    *   environment: 'production',
    *   version: '1.0.0'
    * };
-   * 
+   *
    * const json = formatter.format(basicEntry);
    * // Result:
    * // {
@@ -134,7 +95,7 @@ export class JsonFormat {
    * //   "version": "1.0.0",
    * //   "message": "Service started"
    * // }
-   * 
+   *
    * // Complex log entry with error and context
    * const errorEntry: LogEntry = {
    *   timestamp: new Date(),
@@ -157,7 +118,7 @@ export class JsonFormat {
    *   },
    *   duration: 150 // ms
    * };
-   * 
+   *
    * const errorJson = formatter.format(errorEntry);
    * ```
    */
@@ -182,11 +143,11 @@ export class JsonFormat {
 
   /**
    * Formats a timestamp according to the configured timestamp format.
-   * 
+   *
    * @private
    * @param {Date} timestamp - The timestamp to format
    * @returns {string} Formatted timestamp string
-   * 
+   *
    * @example
    * ```typescript
    * // ISO format: "2024-01-15T10:30:00.000Z"

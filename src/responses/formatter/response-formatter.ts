@@ -1,91 +1,16 @@
-// import { ApiResponse } from '@/types';
-// import { CertusResponseBuilder } from '../builder';
-// import { CertusAdiValtError } from '@/certus';
-
-// export class ResponseFormatter {
-//   static formatSuccess<T = unknown>(
-//     data: T,
-//     options: {
-//       message?: string;
-//       requestId?: string;
-//       meta?: Record<string, unknown>;
-//     } = {}
-//   ): ApiResponse<T> {
-//     return CertusResponseBuilder.success(data, options.message, options.requestId, options.meta);
-//   }
-
-//   static formatError(
-//     error: unknown,
-//     options: {
-//       requestId?: string;
-//       includeDetails?: boolean;
-//     } = {}
-//   ): ApiResponse {
-//     if (error instanceof CertusAdiValtError) {
-//       return CertusResponseBuilder.error(error, options.requestId);
-//     }
-
-//     if (error instanceof Error) {
-//       const certusError = new CertusAdiValtError(
-//         options.includeDetails ? error.message : 'Internal server error',
-//         'SRV_INTERNAL_ERROR',
-//         500,
-//         {},
-//         error
-//       );
-//       return CertusResponseBuilder.error(certusError, options.requestId);
-//     }
-
-//     const certusError = new CertusAdiValtError(
-//       'An unexpected error occurred',
-//       'SRV_INTERNAL_ERROR',
-//       500
-//     );
-//     return CertusResponseBuilder.error(certusError, options.requestId);
-//   }
-
-//   static formatPaginated<T = unknown>(
-//     data: T[],
-//     pagination: {
-//       page: number;
-//       limit: number;
-//       total: number;
-//     },
-//     options: {
-//       requestId?: string;
-//       meta?: Record<string, unknown>;
-//     } = {}
-//   ): ApiResponse<T> {
-//     const totalPages = Math.ceil(pagination.total / pagination.limit);
-//     const hasNext = pagination.page < totalPages;
-//     const hasPrev = pagination.page > 1;
-
-//     const paginationParams = {
-//       page: pagination.page,
-//       limit: pagination.limit,
-//       total: pagination.total,
-//       totalPages,
-//       hasNext,
-//       hasPrev,
-//     };
-
-//     return CertusResponseBuilder.paginated(data, paginationParams, options.requestId, options.meta);
-//   }
-// }
-
 import { ApiResponse } from '@/types';
 import { CertusResponseBuilder } from '../builder';
 import { CertusAdiValtError } from '@/certus';
 
 /**
  * High-level response formatting utility for the CertusAdiValt system.
- * 
+ *
  * Provides simplified, opinionated methods for formatting API responses with
  * sensible defaults and enhanced error handling. Acts as a facade over the
  * more granular CertusResponseBuilder for common use cases.
- * 
+ *
  * @class ResponseFormatter
- * 
+ *
  * @example
  * ```typescript
  * // In API controllers
@@ -93,7 +18,7 @@ import { CertusAdiValtError } from '@/certus';
  *   message: 'User retrieved successfully',
  *   requestId: req.requestId
  * });
- * 
+ *
  * // Automatic error handling
  * try {
  *   await someOperation();
@@ -103,7 +28,7 @@ import { CertusAdiValtError } from '@/certus';
  *     includeDetails: process.env.NODE_ENV === 'development'
  *   });
  * }
- * 
+ *
  * // Simplified pagination
  * return ResponseFormatter.formatPaginated(users, {
  *   page: 1,
@@ -117,11 +42,11 @@ import { CertusAdiValtError } from '@/certus';
 export class ResponseFormatter {
   /**
    * Formats a successful API response with data payload.
-   * 
+   *
    * Provides a simplified interface for success responses with optional
    * message, request ID, and metadata. Wraps the CertusResponseBuilder.success()
    * method with a more convenient options object.
-   * 
+   *
    * @template T - Type of the data payload
    * @param {T} data - The main response data payload
    * @param {Object} [options] - Response formatting options
@@ -129,12 +54,12 @@ export class ResponseFormatter {
    * @param {string} [options.requestId] - Optional request ID for tracing
    * @param {Record<string, unknown>} [options.meta] - Optional additional metadata
    * @returns {ApiResponse<T>} Formatted success response
-   * 
+   *
    * @example
    * ```typescript
    * // Basic success response
    * return ResponseFormatter.formatSuccess({ id: 1, name: 'John' });
-   * 
+   *
    * // Success with all options
    * return ResponseFormatter.formatSuccess(
    *   userData,
@@ -147,7 +72,7 @@ export class ResponseFormatter {
    *     }
    *   }
    * );
-   * 
+   *
    * // Array data with metadata
    * return ResponseFormatter.formatSuccess(products, {
    *   message: `${products.length} products found`,
@@ -168,18 +93,18 @@ export class ResponseFormatter {
 
   /**
    * Formats an error response from any type of error with enhanced handling.
-   * 
+   *
    * Automatically handles different error types and provides appropriate formatting:
    * - CertusAdiValtError: Preserves original error structure and context
    * - Error: Converts to CertusAdiValtError with optional detail masking
    * - Unknown: Creates generic internal server error response
-   * 
+   *
    * @param {unknown} error - The error to format (any type)
    * @param {Object} [options] - Error formatting options
    * @param {string} [options.requestId] - Optional request ID for tracing
    * @param {boolean} [options.includeDetails=false] - Whether to include detailed error messages in production
    * @returns {ApiResponse} Formatted error response
-   * 
+   *
    * @example
    * ```typescript
    * // Handle CertusAdiValtError (preserves original structure)
@@ -190,7 +115,7 @@ export class ResponseFormatter {
    *     requestId: req.requestId
    *   });
    * }
-   * 
+   *
    * // Handle generic errors with detail masking
    * try {
    *   JSON.parse(invalidJson);
@@ -200,7 +125,7 @@ export class ResponseFormatter {
    *     includeDetails: process.env.NODE_ENV === 'development' // Show details only in dev
    *   });
    * }
-   * 
+   *
    * // Handle unknown error types safely
    * try {
    *   await someRiskyOperation();
@@ -247,10 +172,10 @@ export class ResponseFormatter {
 
   /**
    * Formats a paginated response with automatic pagination metadata calculation.
-   * 
+   *
    * Simplifies paginated responses by automatically calculating derived pagination
    * fields (totalPages, hasNext, hasPrev) from basic pagination parameters.
-   * 
+   *
    * @template T - Type of items in the data array
    * @param {T[]} data - Array of paginated items
    * @param {Object} pagination - Basic pagination parameters
@@ -261,7 +186,7 @@ export class ResponseFormatter {
    * @param {string} [options.requestId] - Optional request ID for tracing
    * @param {Record<string, unknown>} [options.meta] - Optional additional metadata
    * @returns {ApiResponse<T>} Formatted paginated response
-   * 
+   *
    * @example
    * ```typescript
    * // Basic pagination
@@ -276,7 +201,7 @@ export class ResponseFormatter {
    *     requestId: req.requestId
    *   }
    * );
-   * 
+   *
    * // Pagination with metadata
    * return ResponseFormatter.formatPaginated(
    *   products,
@@ -293,7 +218,7 @@ export class ResponseFormatter {
    *     }
    *   }
    * );
-   * 
+   *
    * // Empty pagination result
    * return ResponseFormatter.formatPaginated(
    *   [],

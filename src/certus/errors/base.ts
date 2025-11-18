@@ -1,137 +1,17 @@
-// import { ErrorCodes, HttpStatus } from '@/constants';
-// import { ErrorContext } from '@/types';
-
-// export class CertusAdiValtError extends Error {
-//   public readonly code: string;
-//   public readonly statusCode: number;
-//   public readonly timestamp: Date;
-//   public readonly context: Record<string, unknown>;
-//   public readonly originalError?: Error;
-
-//   constructor(
-//     message: string,
-//     code: string = ErrorCodes.SRV_INTERNAL_ERROR,
-//     statusCode: number = HttpStatus.INTERNAL_SERVER_ERROR,
-//     context: Record<string, unknown> = {},
-//     originalError?: Error
-//   ) {
-//     super(message);
-//     this.name = 'CertusAdiValtError';
-//     this.code = code;
-//     this.statusCode = statusCode;
-//     this.timestamp = new Date();
-//     this.context = context;
-//     this.originalError = originalError;
-
-//     if (Error.captureStackTrace) {
-//       Error.captureStackTrace(this, CertusAdiValtError);
-//     }
-
-//     Object.setPrototypeOf(this, CertusAdiValtError.prototype);
-//   }
-
-//   public toJSON(): ErrorContext {
-//     return {
-//       name: this.name,
-//       message: this.message,
-//       code: this.code,
-//       statusCode: this.statusCode,
-//       timestamp: this.timestamp,
-//       context: this.context,
-//       stack: this.stack,
-//       originalError: this.originalError
-//         ? {
-//             name: this.originalError.name,
-//             message: this.originalError.message,
-//             stack: this.originalError.stack,
-//           }
-//         : undefined,
-//     };
-//   }
-
-//   public toLog(): Record<string, unknown> {
-//     return {
-//       error: {
-//         name: this.name,
-//         message: this.message,
-//         code: this.code,
-//         statusCode: this.statusCode,
-//         stack: this.stack,
-//       },
-//       context: this.context,
-//       timestamp: this.timestamp.toISOString(),
-//       originalError: this.originalError
-//         ? {
-//             name: this.originalError.name,
-//             message: this.originalError.message,
-//           }
-//         : undefined,
-//     };
-//   }
-
-//   // Builder pattern methods that return new instances
-//   public withContext(context: Record<string, unknown>): this {
-//     return this.clone({ context: { ...this.context, ...context } });
-//   }
-
-//   public withCode(code: string): this {
-//     return this.clone({ code });
-//   }
-
-//   public withStatusCode(statusCode: number): this {
-//     return this.clone({ statusCode });
-//   }
-
-//   public withMessage(message: string): this {
-//     return this.clone({ message });
-//   }
-
-//   // Protected clone method for subclasses
-//   protected clone(
-//     overrides: Partial<{
-//       message: string;
-//       code: string;
-//       statusCode: number;
-//       context: Record<string, unknown>;
-//       originalError?: Error;
-//     }>
-//   ): this {
-//     const Constructor = this.constructor as new (
-//       message: string,
-//       code: string,
-//       statusCode: number,
-//       context: Record<string, unknown>,
-//       originalError?: Error
-//     ) => this;
-
-//     const newError = new Constructor(
-//       overrides.message ?? this.message,
-//       overrides.code ?? this.code,
-//       overrides.statusCode ?? this.statusCode,
-//       overrides.context ?? { ...this.context },
-//       overrides.originalError ?? this.originalError
-//     );
-
-//     // Preserve stack trace
-//     newError.stack = this.stack;
-//     return newError;
-//   }
-// }
-
 import { ErrorCodes, HttpStatus } from '@/constants';
 import { ErrorContext } from '@/types';
 
 /**
  * Custom error class for the CertusAdiValt system with enhanced error handling capabilities.
- * 
+ *
  * Extends the native Error class to include structured error information, HTTP status codes,
  * contextual metadata, and chainable builder methods for error customization.
- * 
+ *
  * @example
  * ```typescript
  * // Basic error creation
  * throw new CertusAdiValtError('User not found', 'USER_NOT_FOUND', 404);
- * 
+ *
  * // Error with context and original error
  * try {
  *   await someOperation();
@@ -144,7 +24,7 @@ import { ErrorContext } from '@/types';
  *     error
  *   );
  * }
- * 
+ *
  * // Using builder pattern
  * throw new CertusAdiValtError('Initial error')
  *   .withCode('VALIDATION_ERROR')
@@ -185,18 +65,18 @@ export class CertusAdiValtError extends Error {
 
   /**
    * Creates a new CertusAdiValtError instance.
-   * 
+   *
    * @param {string} message - Human-readable error description
    * @param {string} [code=ErrorCodes.SRV_INTERNAL_ERROR] - Machine-readable error code
    * @param {number} [statusCode=HttpStatus.INTERNAL_SERVER_ERROR] - HTTP status code
    * @param {Record<string, unknown>} [context={}] - Additional error context
    * @param {Error} [originalError] - Original error that caused this error
-   * 
+   *
    * @example
    * ```typescript
    * // Minimal error
    * new CertusAdiValtError('Something went wrong');
-   * 
+   *
    * // Full error with all parameters
    * new CertusAdiValtError(
    *   'Database connection failed',
@@ -231,9 +111,9 @@ export class CertusAdiValtError extends Error {
 
   /**
    * Converts the error to a structured JSON representation suitable for API responses.
-   * 
+   *
    * @returns {ErrorContext} Structured error context object with all error details
-   * 
+   *
    * @remarks
    * The returned object includes:
    * - Error name, message, code, and status code
@@ -241,7 +121,7 @@ export class CertusAdiValtError extends Error {
    * - Additional context metadata
    * - Stack trace (if available)
    * - Original error details (name, message, stack) if present
-   * 
+   *
    * @example
    * ```typescript
    * const error = new CertusAdiValtError('Not found', 'NOT_FOUND', 404);
@@ -280,16 +160,16 @@ export class CertusAdiValtError extends Error {
 
   /**
    * Converts the error to a log-friendly format with reduced verbosity.
-   * 
+   *
    * @returns {Record<string, unknown>} Simplified error representation for logging
-   * 
+   *
    * @remarks
    * Compared to toJSON(), this method:
    * - Uses ISO string for timestamp instead of Date object
    * - Provides simplified original error (name and message only)
    * - Structures output for better log aggregation and parsing
    * - Excludes full stack traces from original errors
-   * 
+   *
    * @example
    * ```typescript
    * const error = new CertusAdiValtError('DB error', 'DB_ERROR', 500);
@@ -321,10 +201,10 @@ export class CertusAdiValtError extends Error {
 
   /**
    * Creates a new error instance with additional context merged into existing context.
-   * 
+   *
    * @param {Record<string, unknown>} context - Additional context to merge
    * @returns {this} New error instance with merged context
-   * 
+   *
    * @example
    * ```typescript
    * const error = new CertusAdiValtError('Error')
@@ -339,10 +219,10 @@ export class CertusAdiValtError extends Error {
 
   /**
    * Creates a new error instance with the specified error code.
-   * 
+   *
    * @param {string} code - New error code to use
    * @returns {this} New error instance with updated code
-   * 
+   *
    * @example
    * ```typescript
    * const error = new CertusAdiValtError('Error')
@@ -355,10 +235,10 @@ export class CertusAdiValtError extends Error {
 
   /**
    * Creates a new error instance with the specified HTTP status code.
-   * 
+   *
    * @param {number} statusCode - New HTTP status code to use
    * @returns {this} New error instance with updated status code
-   * 
+   *
    * @example
    * ```typescript
    * const error = new CertusAdiValtError('Error')
@@ -371,10 +251,10 @@ export class CertusAdiValtError extends Error {
 
   /**
    * Creates a new error instance with the specified error message.
-   * 
+   *
    * @param {string} message - New error message to use
    * @returns {this} New error instance with updated message
-   * 
+   *
    * @example
    * ```typescript
    * const error = new CertusAdiValtError('Initial')
@@ -388,16 +268,16 @@ export class CertusAdiValtError extends Error {
   /**
    * Protected method to clone the error instance with overridden properties.
    * Used internally by builder pattern methods to create modified error instances.
-   * 
+   *
    * @protected
    * @param {Partial<{ message: string; code: string; statusCode: number; context: Record<string, unknown>; originalError?: Error; }>} overrides - Properties to override in the new instance
    * @returns {this} New error instance with applied overrides
-   * 
+   *
    * @remarks
    * - Preserves the original stack trace for better debugging
    * - Creates a new instance rather than modifying the existing one
    * - Maintains the same constructor chain for subclass compatibility
-   * 
+   *
    * @example
    * ```typescript
    * // In a subclass

@@ -1,60 +1,17 @@
-// import { ErrorCodes, HttpStatus } from '@/constants';
-// import { CertusClientError } from './client';
-
-// export class CertusAuthenticationError extends CertusClientError {
-//   constructor(
-//     message: string = 'Authentication failed',
-//     code: string = ErrorCodes.AUTH_INVALID_CREDENTIALS,
-//     statusCode: number = HttpStatus.UNAUTHORIZED,
-//     context: Record<string, unknown> = {}
-//   ) {
-//     super(message, code, statusCode, context);
-//     this.name = 'CertusAuthenticationError';
-//   }
-// }
-
-// export class CertusInvalidCredentialsError extends CertusAuthenticationError {
-//   constructor(message: string = 'Invalid credentials', context: Record<string, unknown> = {}) {
-//     super(message, ErrorCodes.AUTH_INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED, context);
-//     this.name = 'CertusInvalidCredentialsError';
-//   }
-// }
-
-// export class CertusTokenExpiredError extends CertusAuthenticationError {
-//   constructor(message: string = 'Token has expired', context: Record<string, unknown> = {}) {
-//     super(message, ErrorCodes.AUTH_TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED, context);
-//     this.name = 'CertusTokenExpiredError';
-//   }
-// }
-
-// export class CertusInsufficientPermissionsError extends CertusClientError {
-//   constructor(message: string = 'Insufficient permissions', context: Record<string, unknown> = {}) {
-//     super(message, ErrorCodes.AUTH_INSUFFICIENT_PERMISSIONS, HttpStatus.FORBIDDEN, context);
-//     this.name = 'CertusInsufficientPermissionsError';
-//   }
-// }
-
-// export class CertusSessionRevokedError extends CertusAuthenticationError {
-//   constructor(message: string = 'Session has been revoked', context: Record<string, unknown> = {}) {
-//     super(message, ErrorCodes.AUTH_SESSION_REVOKED, HttpStatus.UNAUTHORIZED, context);
-//     this.name = 'CertusSessionRevokedError';
-//   }
-// }
-
 import { ErrorCodes, HttpStatus } from '@/constants';
 import { CertusClientError } from './client';
 
 /**
  * Base authentication error class for all authentication-related failures.
- * 
+ *
  * Extends CertusClientError to provide specialized error handling for authentication scenarios.
  * Represents generic authentication failures that don't fit more specific error categories.
- * 
+ *
  * @example
  * ```typescript
  * // Throw when authentication mechanism fails
  * throw new CertusAuthenticationError('Authentication provider unavailable');
- * 
+ *
  * // With additional context
  * throw new CertusAuthenticationError(
  *   'Multi-factor authentication required',
@@ -67,17 +24,17 @@ import { CertusClientError } from './client';
 export class CertusAuthenticationError extends CertusClientError {
   /**
    * Creates a new CertusAuthenticationError instance.
-   * 
+   *
    * @param {string} [message='Authentication failed'] - Human-readable error description
    * @param {string} [code=ErrorCodes.AUTH_INVALID_CREDENTIALS] - Machine-readable error code
    * @param {number} [statusCode=HttpStatus.UNAUTHORIZED] - HTTP status code (401 Unauthorized)
    * @param {Record<string, unknown>} [context={}] - Additional authentication context
-   * 
+   *
    * @example
    * ```typescript
    * // Default authentication error
    * throw new CertusAuthenticationError();
-   * 
+   *
    * // Custom authentication error
    * throw new CertusAuthenticationError(
    *   'Biometric authentication failed',
@@ -100,10 +57,10 @@ export class CertusAuthenticationError extends CertusClientError {
 
 /**
  * Error thrown when user credentials (username/password) are invalid or incorrect.
- * 
+ *
  * Used for cases where the provided credentials don't match any user account
  * or fail validation checks (e.g., password complexity requirements).
- * 
+ *
  * @example
  * ```typescript
  * // Validate user credentials
@@ -113,7 +70,7 @@ export class CertusAuthenticationError extends CertusClientError {
  *     { username, attemptCount: 3 }
  *   );
  * }
- * 
+ *
  * // With builder pattern
  * throw new CertusInvalidCredentialsError()
  *   .withContext({ ip: '192.168.1.1', userAgent: 'Mozilla/5.0' });
@@ -122,22 +79,22 @@ export class CertusAuthenticationError extends CertusClientError {
 export class CertusInvalidCredentialsError extends CertusAuthenticationError {
   /**
    * Creates a new CertusInvalidCredentialsError instance.
-   * 
+   *
    * @param {string} [message='Invalid credentials'] - Human-readable error description
    * @param {Record<string, unknown>} [context={}] - Additional context about the credential failure
-   * 
+   *
    * @example
    * ```typescript
    * // Basic invalid credentials
    * throw new CertusInvalidCredentialsError();
-   * 
+   *
    * // With custom message and context
    * throw new CertusInvalidCredentialsError(
    *   'The password you entered is incorrect',
-   *   { 
+   *   {
    *     userId: 'user_123',
    *     lockoutRemaining: 15, // minutes
-   *     failedAttempts: 2 
+   *     failedAttempts: 2
    *   }
    * );
    * ```
@@ -150,10 +107,10 @@ export class CertusInvalidCredentialsError extends CertusAuthenticationError {
 
 /**
  * Error thrown when an authentication token (JWT, access token, etc.) has expired.
- * 
+ *
  * Indicates that the token was valid but is no longer acceptable due to expiration.
  * Clients should typically request a new token using refresh token mechanisms.
- * 
+ *
  * @example
  * ```typescript
  * // Check token expiration
@@ -163,7 +120,7 @@ export class CertusInvalidCredentialsError extends CertusAuthenticationError {
  *     { tokenId: token.id, expiredAt: token.expiresAt }
  *   );
  * }
- * 
+ *
  * // In token validation middleware
  * try {
  *   verifyToken(accessToken);
@@ -178,15 +135,15 @@ export class CertusInvalidCredentialsError extends CertusAuthenticationError {
 export class CertusTokenExpiredError extends CertusAuthenticationError {
   /**
    * Creates a new CertusTokenExpiredError instance.
-   * 
+   *
    * @param {string} [message='Token has expired'] - Human-readable error description
    * @param {Record<string, unknown>} [context={}] - Additional context about the token expiration
-   * 
+   *
    * @example
    * ```typescript
    * // Default token expired error
    * throw new CertusTokenExpiredError();
-   * 
+   *
    * // With detailed context
    * throw new CertusTokenExpiredError(
    *   'Refresh token has expired',
@@ -207,25 +164,25 @@ export class CertusTokenExpiredError extends CertusAuthenticationError {
 
 /**
  * Error thrown when a user lacks sufficient permissions to perform an action.
- * 
+ *
  * Represents authorization failures where the user is authenticated but doesn't have
  * the required permissions, roles, or access levels for the requested operation.
  * Returns HTTP 403 Forbidden status code.
- * 
+ *
  * @example
  * ```typescript
  * // Check user permissions
  * if (!user.hasPermission('delete_users')) {
  *   throw new CertusInsufficientPermissionsError(
  *     'You do not have permission to delete users',
- *     { 
+ *     {
  *       requiredPermission: 'delete_users',
  *       userPermissions: user.permissions,
  *       resource: 'users'
  *     }
-   *   );
+ *   );
  * }
- * 
+ *
  * // Role-based access control
  * if (user.role !== 'admin') {
  *   throw new CertusInsufficientPermissionsError(
@@ -237,15 +194,15 @@ export class CertusTokenExpiredError extends CertusAuthenticationError {
 export class CertusInsufficientPermissionsError extends CertusClientError {
   /**
    * Creates a new CertusInsufficientPermissionsError instance.
-   * 
+   *
    * @param {string} [message='Insufficient permissions'] - Human-readable error description
    * @param {Record<string, unknown>} [context={}] - Additional context about the permission failure
-   * 
+   *
    * @example
    * ```typescript
    * // Basic insufficient permissions
    * throw new CertusInsufficientPermissionsError();
-   * 
+   *
    * // With detailed permission context
    * throw new CertusInsufficientPermissionsError(
    *   'Cannot access billing information',
@@ -267,10 +224,10 @@ export class CertusInsufficientPermissionsError extends CertusClientError {
 
 /**
  * Error thrown when a user's session has been explicitly revoked or invalidated.
- * 
+ *
  * Indicates that the session was previously valid but has been manually terminated
  * by the user, administrator, or system (e.g., due to security concerns, logout from other device).
- * 
+ *
  * @example
  * ```typescript
  * // Check session status
@@ -278,14 +235,14 @@ export class CertusInsufficientPermissionsError extends CertusClientError {
  * if (session.revoked) {
  *   throw new CertusSessionRevokedError(
  *     'This session was terminated by the user',
- *     { 
+ *     {
  *       sessionId,
  *       revokedAt: session.revokedAt,
- *       revokedBy: session.revokedBy 
+ *       revokedBy: session.revokedBy
  *     }
  *   );
  * }
- * 
+ *
  * // In authentication middleware
  * if (await isSessionRevoked(token.sessionId)) {
  *   throw new CertusSessionRevokedError()
@@ -296,15 +253,15 @@ export class CertusInsufficientPermissionsError extends CertusClientError {
 export class CertusSessionRevokedError extends CertusAuthenticationError {
   /**
    * Creates a new CertusSessionRevokedError instance.
-   * 
+   *
    * @param {string} [message='Session has been revoked'] - Human-readable error description
    * @param {Record<string, unknown>} [context={}] - Additional context about the session revocation
-   * 
+   *
    * @example
    * ```typescript
    * // Default session revoked error
    * throw new CertusSessionRevokedError();
-   * 
+   *
    * // With revocation details
    * throw new CertusSessionRevokedError(
    *   'Your account was logged out from another device',

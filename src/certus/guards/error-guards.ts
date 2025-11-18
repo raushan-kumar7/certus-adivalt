@@ -1,44 +1,14 @@
-// import { CertusAdiValtError } from '../errors';
-
-// export function isCertusError(error: unknown): error is CertusAdiValtError {
-//   return error instanceof CertusAdiValtError;
-// }
-
-// export function isClientError(error: unknown): boolean {
-//   return isCertusError(error) && error.statusCode >= 400 && error.statusCode < 500;
-// }
-
-// export function isServerError(error: unknown): boolean {
-//   return isCertusError(error) && error.statusCode >= 500;
-// }
-
-// export function isAuthenticationError(error: unknown): boolean {
-//   return isCertusError(error) && error.code.startsWith('AUTH_');
-// }
-
-// export function isValidationError(error: unknown): boolean {
-//   return isCertusError(error) && error.code.startsWith('VAL_');
-// }
-
-// export function isDatabaseError(error: unknown): boolean {
-//   return isCertusError(error) && error.code.startsWith('DB_');
-// }
-
-// export function isExternalServiceError(error: unknown): boolean {
-//   return isCertusError(error) && error.code === 'SRV_EXTERNAL_SERVICE';
-// }
-
 import { CertusAdiValtError } from '../errors';
 
 /**
  * Type guard to check if an unknown value is a CertusAdiValtError instance.
- * 
+ *
  * This function provides runtime type checking to safely determine if an error
  * object is an instance of the CertusAdiValtError class or its subclasses.
- * 
+ *
  * @param {unknown} error - The value to check, typically from a catch block
  * @returns {error is CertusAdiValtError} True if the value is a CertusAdiValtError instance
- * 
+ *
  * @example
  * ```typescript
  * try {
@@ -53,7 +23,7 @@ import { CertusAdiValtError } from '../errors';
  *     console.error('Unknown error type:', error);
  *   }
  * }
- * 
+ *
  * // In error middleware
  * if (isCertusError(err)) {
  *   return res.status(err.statusCode).json(err.toJSON());
@@ -66,13 +36,13 @@ export function isCertusError(error: unknown): error is CertusAdiValtError {
 
 /**
  * Checks if an error is a client error (4xx status code range).
- * 
+ *
  * Client errors indicate that the request contains bad syntax or cannot be fulfilled
  * due to client-side issues. These errors are typically the client's responsibility to fix.
- * 
+ *
  * @param {unknown} error - The error to check
  * @returns {boolean} True if the error is a CertusAdiValtError with 4xx status code
- * 
+ *
  * @example
  * ```typescript
  * try {
@@ -86,7 +56,7 @@ export function isCertusError(error: unknown): error is CertusAdiValtError {
  *     showGenericErrorMessage();
  *   }
  * }
- * 
+ *
  * // In API error handling
  * if (isClientError(error)) {
  *   logger.warn('Client error:', error.toLog());
@@ -101,13 +71,13 @@ export function isClientError(error: unknown): boolean {
 
 /**
  * Checks if an error is a server error (5xx status code range).
- * 
+ *
  * Server errors indicate that the server failed to fulfill a valid request.
  * These errors are typically the server's responsibility and may require administrative action.
- * 
+ *
  * @param {unknown} error - The error to check
  * @returns {boolean} True if the error is a CertusAdiValtError with 5xx status code
- * 
+ *
  * @example
  * ```typescript
  * try {
@@ -121,7 +91,7 @@ export function isClientError(error: unknown): boolean {
  *   // Handle client errors normally
  *   return createClientErrorResponse(error);
  * }
- * 
+ *
  * // In monitoring systems
  * if (isServerError(error)) {
  *   metrics.increment('server_errors');
@@ -137,13 +107,13 @@ export function isServerError(error: unknown): boolean {
 
 /**
  * Checks if an error is an authentication-related error.
- * 
+ *
  * Authentication errors typically involve issues with user identity verification,
  * such as invalid credentials, expired tokens, or missing authentication.
- * 
+ *
  * @param {unknown} error - The error to check
  * @returns {boolean} True if the error is a CertusAdiValtError with AUTH_ prefix error code
- * 
+ *
  * @example
  * ```typescript
  * // In authentication middleware
@@ -157,7 +127,7 @@ export function isServerError(error: unknown): boolean {
  *   }
  *   throw error; // Re-throw non-authentication errors
  * }
- * 
+ *
  * // In client-side error handling
  * if (isAuthenticationError(error)) {
  *   // Show login modal or redirect to authentication flow
@@ -174,13 +144,13 @@ export function isAuthenticationError(error: unknown): boolean {
 
 /**
  * Checks if an error is a validation-related error.
- * 
+ *
  * Validation errors occur when input data fails to meet required criteria,
  * such as schema validation, business rules, or input format requirements.
- * 
+ *
  * @param {unknown} error - The error to check
  * @returns {boolean} True if the error is a CertusAdiValtError with VAL_ prefix error code
- * 
+ *
  * @example
  * ```typescript
  * // In form submission handling
@@ -196,7 +166,7 @@ export function isAuthenticationError(error: unknown): boolean {
  *   // Handle non-validation errors
  *   showGenericError();
  * }
- * 
+ *
  * // In API input validation
  * if (isValidationError(error)) {
  *   // Return detailed validation errors to help clients fix their requests
@@ -213,13 +183,13 @@ export function isValidationError(error: unknown): boolean {
 
 /**
  * Checks if an error is a database-related error.
- * 
+ *
  * Database errors involve issues with data persistence operations,
  * such as connection failures, query errors, constraint violations, or timeouts.
- * 
+ *
  * @param {unknown} error - The error to check
  * @returns {boolean} True if the error is a CertusAdiValtError with DB_ prefix error code
- * 
+ *
  * @example
  * ```typescript
  * // In data access layer
@@ -237,7 +207,7 @@ export function isValidationError(error: unknown): boolean {
  *   }
  *   throw error;
  * }
- * 
+ *
  * // In health checks
  * if (isDatabaseError(error)) {
  *   healthStatus.database = 'unhealthy';
@@ -251,13 +221,13 @@ export function isDatabaseError(error: unknown): boolean {
 
 /**
  * Checks if an error is specifically an external service error.
- * 
+ *
  * External service errors occur when dependencies on third-party services fail,
  * such as API outages, network issues, or invalid responses from external systems.
- * 
+ *
  * @param {unknown} error - The error to check
  * @returns {boolean} True if the error is a CertusAdiValtError with SRV_EXTERNAL_SERVICE error code
- * 
+ *
  * @example
  * ```typescript
  * // In payment processing
@@ -274,7 +244,7 @@ export function isDatabaseError(error: unknown): boolean {
  *   }
  *   throw error;
  * }
- * 
+ *
  * // In dependency health monitoring
  * if (isExternalServiceError(error)) {
  *   dependencyHealth.setStatus('external_api', 'degraded');

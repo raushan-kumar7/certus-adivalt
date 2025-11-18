@@ -1,58 +1,13 @@
-// import { ErrorCodes, HttpStatus } from '@/constants';
-// import { CertusServerError } from './server';
-
-// export class CertusDatabaseError extends CertusServerError {
-//   constructor(
-//     message: string = 'Database error occurred',
-//     code: string = ErrorCodes.DB_QUERY_ERROR,
-//     statusCode: number = HttpStatus.INTERNAL_SERVER_ERROR,
-//     context: Record<string, unknown> = {}
-//   ) {
-//     super(message, code, statusCode, context);
-//     this.name = 'CertusDatabaseError';
-//   }
-// }
-
-// export class CertusUniqueConstraintError extends CertusDatabaseError {
-//   constructor(
-//     message: string = 'Unique constraint violation',
-//     context: Record<string, unknown> = {}
-//   ) {
-//     super(message, ErrorCodes.DB_UNIQUE_CONSTRAINT, HttpStatus.CONFLICT, context);
-//     this.name = 'CertusUniqueConstraintError';
-//   }
-// }
-
-// export class CertusConnectionError extends CertusDatabaseError {
-//   constructor(
-//     message: string = 'Database connection error',
-//     context: Record<string, unknown> = {}
-//   ) {
-//     super(message, ErrorCodes.DB_CONNECTION_ERROR, HttpStatus.SERVICE_UNAVAILABLE, context);
-//     this.name = 'CertusConnectionError';
-//   }
-// }
-
-// export class CertusTimeoutError extends CertusDatabaseError {
-//   constructor(
-//     message: string = 'Database operation timed out',
-//     context: Record<string, unknown> = {}
-//   ) {
-//     super(message, ErrorCodes.DB_TIMEOUT_ERROR, HttpStatus.GATEWAY_TIMEOUT, context);
-//     this.name = 'CertusTimeoutError';
-//   }
-// }
-
 import { ErrorCodes, HttpStatus } from '@/constants';
 import { CertusServerError } from './server';
 
 /**
  * Base database error class for all database-related failures.
- * 
+ *
  * Represents errors that occur during database operations such as query execution,
  * connection issues, or constraint violations. Extends CertusServerError to provide
  * specialized handling for database-specific error scenarios.
- * 
+ *
  * @example
  * ```typescript
  * // Catch and wrap database errors
@@ -66,7 +21,7 @@ import { CertusServerError } from './server';
  *     { table: 'users', operation: 'insert', originalError: error }
  *   );
  * }
- * 
+ *
  * // Custom database error
  * throw new CertusDatabaseError('Database migration failed')
  *   .withContext({ migration: 'v2_add_indexes', step: 'creating_indexes' });
@@ -75,17 +30,17 @@ import { CertusServerError } from './server';
 export class CertusDatabaseError extends CertusServerError {
   /**
    * Creates a new CertusDatabaseError instance.
-   * 
+   *
    * @param {string} [message='Database error occurred'] - Human-readable error description
    * @param {string} [code=ErrorCodes.DB_QUERY_ERROR] - Machine-readable error code for database failures
    * @param {number} [statusCode=HttpStatus.INTERNAL_SERVER_ERROR] - HTTP status code (5xx range)
    * @param {Record<string, unknown>} [context={}] - Additional context about the database error
-   * 
+   *
    * @example
    * ```typescript
    * // Default database error
    * throw new CertusDatabaseError();
-   * 
+   *
    * // Specific database error with context
    * throw new CertusDatabaseError(
    *   'Failed to execute complex join query',
@@ -113,11 +68,11 @@ export class CertusDatabaseError extends CertusServerError {
 
 /**
  * Error thrown when a database unique constraint violation occurs.
- * 
+ *
  * Represents cases where an insert or update operation would violate a unique
  * constraint (e.g., duplicate email, duplicate username). Returns HTTP 409 Conflict
  * status code to indicate the request conflicts with current state.
- * 
+ *
  * @example
  * ```typescript
  * // Handle unique email constraint
@@ -131,7 +86,7 @@ export class CertusDatabaseError extends CertusServerError {
  *     );
  *   }
  * }
- * 
+ *
  * // Check for duplicate usernames
  * if (await usernameExists(username)) {
  *   throw new CertusUniqueConstraintError('Username already taken')
@@ -142,15 +97,15 @@ export class CertusDatabaseError extends CertusServerError {
 export class CertusUniqueConstraintError extends CertusDatabaseError {
   /**
    * Creates a new CertusUniqueConstraintError instance.
-   * 
+   *
    * @param {string} [message='Unique constraint violation'] - Human-readable error description
    * @param {Record<string, unknown>} [context={}] - Additional context about the constraint violation
-   * 
+   *
    * @example
    * ```typescript
    * // Basic unique constraint error
    * throw new CertusUniqueConstraintError();
-   * 
+   *
    * // Detailed constraint violation
    * throw new CertusUniqueConstraintError(
    *   'Product SKU must be unique',
@@ -176,11 +131,11 @@ export class CertusUniqueConstraintError extends CertusDatabaseError {
 
 /**
  * Error thrown when database connection issues occur.
- * 
+ *
  * Represents failures in establishing or maintaining database connections,
  * including connection timeouts, authentication failures, or database unavailability.
  * Returns HTTP 503 Service Unavailable status code.
- * 
+ *
  * @example
  * ```typescript
  * // Database connection health check
@@ -195,7 +150,7 @@ export class CertusUniqueConstraintError extends CertusDatabaseError {
  *     }
  *   );
  * }
- * 
+ *
  * // Connection pool exhaustion
  * if (connectionPool.isFull()) {
  *   throw new CertusConnectionError('Database connection pool exhausted')
@@ -206,15 +161,15 @@ export class CertusUniqueConstraintError extends CertusDatabaseError {
 export class CertusConnectionError extends CertusDatabaseError {
   /**
    * Creates a new CertusConnectionError instance.
-   * 
+   *
    * @param {string} [message='Database connection error'] - Human-readable error description
    * @param {Record<string, unknown>} [context={}] - Additional context about the connection failure
-   * 
+   *
    * @example
    * ```typescript
    * // Basic connection error
    * throw new CertusConnectionError();
-   * 
+   *
    * // Detailed connection failure
    * throw new CertusConnectionError(
    *   'Database authentication failed',
@@ -241,11 +196,11 @@ export class CertusConnectionError extends CertusDatabaseError {
 
 /**
  * Error thrown when database operations exceed their time limits.
- * 
+ *
  * Represents cases where queries, transactions, or other database operations
  * take longer than the configured timeout period. Returns HTTP 504 Gateway Timeout
  * status code to indicate the operation didn't complete in time.
- * 
+ *
  * @example
  * ```typescript
  * // Query with timeout
@@ -262,7 +217,7 @@ export class CertusConnectionError extends CertusDatabaseError {
  *     );
  *   }
  * }
- * 
+ *
  * // Long-running transaction timeout
  * if (transaction.elapsedTime > MAX_TRANSACTION_TIME) {
  *   throw new CertusTimeoutError('Transaction timeout exceeded')
@@ -273,15 +228,15 @@ export class CertusConnectionError extends CertusDatabaseError {
 export class CertusTimeoutError extends CertusDatabaseError {
   /**
    * Creates a new CertusTimeoutError instance.
-   * 
+   *
    * @param {string} [message='Database operation timed out'] - Human-readable error description
    * @param {Record<string, unknown>} [context={}] - Additional context about the timeout
-   * 
+   *
    * @example
    * ```typescript
    * // Basic timeout error
    * throw new CertusTimeoutError();
-   * 
+   *
    * // Detailed timeout information
    * throw new CertusTimeoutError(
    *   'Complex analytics query timed out',
