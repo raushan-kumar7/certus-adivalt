@@ -81,7 +81,6 @@ dist
 
 # Gatsby files
 .cache/
-public
 
 # Vuepress build output
 .vuepress/dist
@@ -191,3 +190,6 @@ fix-imports.js
 demo.txt
 test-case.txt
 certus-adivalt.test-case.txt
+dd.md
+./fn.txt
+docs
