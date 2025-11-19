@@ -94,7 +94,7 @@ const Sidebar = () => {
     <div className="w-80 h-screen bg-gray-50 border-r border-gray-200 overflow-y-auto flex-shrink-0">
       {/* Sidebar Header */}
       <div className="p-6 border-b border-gray-200 bg-white">
-        <h2 className="text-xl font-semibold text-gray-800">Documentation</h2>
+        <h2 className="text-xl font-semibold text-gray-800">CERTUS ADI VALT | Docs</h2>
       </div>
 
       {/* Navigation */}
