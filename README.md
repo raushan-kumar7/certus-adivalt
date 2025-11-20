@@ -2,7 +2,12 @@
 
 <div align="center">
 
-![CertusAdiValt Banner](https://via.placeholder.com/1200x300/667eea/ffffff?text=CertusAdiValt)
+<p align="center">
+
+  <img src="https://res.cloudinary.com/cloud-alpha/image/upload/v1763662138/npm_pkg/certus_adi_valt_logo_fsoj5u.png" 
+       alt="CertusAdiValt Banner" 
+       width="800" height="250px">
+</p>
 
 **The Certain Shield for Your Applications**
 
@@ -2906,6 +2911,7 @@ You could be our **first contributor**! Every great project starts with a single
 ## 🚀 **Be the First to Make History!**
 
 ### **Your Name Could Be Here:**
+
 ```
 | [![Your Avatar](https://via.placeholder.com/100/4CAF50/FFFFFF?text=You+)](https://github.com/your-username) |
 |:----------------------------------------------------------------------------------------------------------:|
@@ -2915,12 +2921,14 @@ You could be our **first contributor**! Every great project starts with a single
 ```
 
 ### **Ready to Make Your Mark?**
+
 1. **Browse** [Good First Issues](https://github.com/raushan-kumar7/certus-adivalt/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) 🎯
 2. **Pick** something that interests you 💡
 3. **Comment** "I'd like to work on this!" 👋
 4. **Get** personalized guidance from the founder 🤝
 
 ### **Special Perks for Early Contributors** 🎁
+
 - 📢 **Featured prominently** in our hall of fame
 - 💬 **Direct access** to founder for guidance
 - 🎯 **Meaningful impact** on project direction
@@ -2930,11 +2938,11 @@ You could be our **first contributor**! Every great project starts with a single
 
 ## 💫 **A Message from the Founder**
 
-> "I started CertusAdiValt to solve real problems in certificate management. While I've built the foundation alone, I truly believe this project will thrive with community collaboration. 
+> "Every time I started a new project, I found myself writing the same foundational code: logging systems, error handlers, and response structures. This repetitive setup was slowing us down and diverting focus from what truly mattered - building innovative features.
 >
-> **Your fresh perspective could be exactly what we need** to take this to the next level. Don't worry about experience level - I'm here to help you every step of the way!
+> **That's why I created CertusAdiValt** - a comprehensive solution that handles all the essentials out of the box. No more rebuilding the same components. No more consistency issues across projects. Just clean, reliable infrastructure that lets you jump straight into development.
 >
-> Let's build something amazing together! 🚀"
+> Spend less time on setup and more time creating value. Let's build better applications, faster together! ⚡"
 >
 > — *Raushan Kumar*
 
