@@ -1,6 +1,6 @@
 {
   "name": "certus-adivalt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Certain Adi Vault - The most reliable error handling, response management, and logging system",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,7 +25,16 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write src/**/*.ts",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build && npm test"
+    "prepublishOnly": "npm run clean && npm run build && npm test",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major",
+    "release:patch": "npm run version:patch && npm run publish:build",
+    "release:minor": "npm run version:minor && npm run publish:build", 
+    "release:major": "npm run version:major && npm run publish:build",
+    "publish:build": "npm run clean && npm run build && npm test && npm publish",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [
     "error-handling",
@@ -50,7 +59,6 @@
   "devDependencies": {
     "@types/express": "^5.0.5",
     "@types/jest": "^30.0.0",
-    "@types/module-alias": "^2.0.4",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
