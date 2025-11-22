@@ -1,6 +1,6 @@
 {
   "name": "certus-adivalt",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Certain Adi Vault - The most reliable error handling, response management, and logging system",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
