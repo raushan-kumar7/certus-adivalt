@@ -1,4 +1,4 @@
-import { ResponseFormatter } from '@/responses';
+import { ResponseFormatter } from '../../responses';
 import { Request, Response, NextFunction } from 'express';
 
 /**

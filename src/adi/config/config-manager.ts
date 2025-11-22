@@ -1,5 +1,5 @@
-import { CertusAdiValtConfig, Environment, LogLevel } from '@/types';
-import { CertusAdiValtError } from '@/certus';
+import { CertusAdiValtConfig, Environment, LogLevel } from '../../types';
+import { CertusAdiValtError } from '../../certus';
 
 /**
  * Singleton configuration manager for the CertusAdiValt system.

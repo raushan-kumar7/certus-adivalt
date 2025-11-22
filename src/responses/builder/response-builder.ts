@@ -1,11 +1,11 @@
-import { CertusAdiValtError } from '@/certus';
+import { CertusAdiValtError } from '../../certus';
 import {
   EmptyResponse,
   ErrorResponse,
   PaginatedResponse,
   PaginationParams,
   SuccessResponse,
-} from '@/types';
+} from '../../types';
 
 /**
  * Response builder utility for creating standardized API responses in the CertusAdiValt system.

@@ -16,15 +16,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"],
-      "@/types": ["types/index"],
-      "@/constants": ["constants/index"],
-      "@/certus": ["certus/index"],
-      "@/responses": ["responses/index"],
-      "@/valt": ["valt/index"],
-      "@/adi": ["adi/index"]
-    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "tests", "examples"]

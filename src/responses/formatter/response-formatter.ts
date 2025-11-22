@@ -1,6 +1,6 @@
-import { ApiResponse } from '@/types';
+import { ApiResponse } from '../../types';
 import { CertusResponseBuilder } from '../builder';
-import { CertusAdiValtError } from '@/certus';
+import { CertusAdiValtError } from '../../certus';
 
 /**
  * High-level response formatting utility for the CertusAdiValt system.

@@ -1,4 +1,4 @@
-import { ErrorCodes, HttpStatus } from '@/constants';
+import { ErrorCodes, HttpStatus } from '../../constants';
 import { CertusClientError } from './client';
 
 /**

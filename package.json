@@ -66,17 +66,5 @@
   },
   "peerDependencies": {
     "express": "^5.1.0"
-  },
-  "dependencies": {
-    "module-alias": "^2.2.3"
-  },
-  "_moduleAliases": {
-    "@/types": "src/types",
-    "@/constants": "src/constants",
-    "@/certus": "src/certus",
-    "@/responses": "src/responses",
-    "@/valt": "src/valt",
-    "@/adi": "src/adi",
-    "@": "src"
   }
 }

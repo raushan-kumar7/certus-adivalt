@@ -1,4 +1,4 @@
-import { LogEntry, LoggerConfig, LogLevel } from '@/types';
+import { LogEntry, LoggerConfig, LogLevel } from '../../../types';
 
 /**
  * JSON formatter for structured logging in the CertusAdiValt system.

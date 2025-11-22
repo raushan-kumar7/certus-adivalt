@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { ValtLogger } from '../logger';
-import { isErrorResponse, ResponseFormatter } from '@/responses';
-import { CertusAdiValtError } from '@/certus';
-import { HttpStatus } from '@/constants';
+import { isErrorResponse, ResponseFormatter } from '../../responses';
+import { CertusAdiValtError } from '../../certus';
+import { HttpStatus } from '../../constants';
 
 /**
  * Express middleware for comprehensive error handling and 404 route management.

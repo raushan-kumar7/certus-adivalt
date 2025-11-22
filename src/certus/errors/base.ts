@@ -1,5 +1,5 @@
-import { ErrorCodes, HttpStatus } from '@/constants';
-import { ErrorContext } from '@/types';
+import { ErrorCodes, HttpStatus } from '../../constants';
+import { ErrorContext } from '../../types';
 
 /**
  * Custom error class for the CertusAdiValt system with enhanced error handling capabilities.

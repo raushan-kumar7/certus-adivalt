@@ -4,7 +4,7 @@ import {
   ErrorResponse,
   PaginatedResponse,
   SuccessResponse,
-} from '@/types';
+} from '../../types';
 
 /**
  * Type guard to check if an API response is a success response with data.

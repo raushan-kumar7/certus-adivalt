@@ -1,4 +1,4 @@
-import { LogEntry, LogLevel, LoggerConfig } from '@/types';
+import { LogEntry, LogLevel, LoggerConfig } from '../../../types';
 
 /**
  * Pretty formatter for human-readable console logging in the CertusAdiValt system.

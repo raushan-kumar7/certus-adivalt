@@ -1,4 +1,4 @@
-import { LogEntry, LogLevel, LoggerConfig } from '@/types';
+import { LogEntry, LogLevel, LoggerConfig } from '../../types';
 import { JsonFormat, PrettyFormat } from './formats';
 
 /**

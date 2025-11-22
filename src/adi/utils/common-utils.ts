@@ -1,4 +1,4 @@
-import { CertusAdiValtError } from '@/certus';
+import { CertusAdiValtError } from '../../certus';
 
 /**
  * A collection of common utility functions used throughout the CertusAdiValt system.

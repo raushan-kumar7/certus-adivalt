@@ -1,5 +1,5 @@
-import { ErrorCodes, HttpStatus } from '@/constants';
-import { CertusErrorOptions } from '@/types';
+import { ErrorCodes, HttpStatus } from '../../constants';
+import { CertusErrorOptions } from '../../types';
 import {
   CertusAdiValtError,
   CertusAuthenticationError,
