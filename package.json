@@ -1,6 +1,6 @@
 {
   "name": "certus-adivalt",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Certain Adi Vault - The most reliable error handling, response management, and logging system",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
     "version:minor": "npm version minor",
     "version:major": "npm version major",
     "release:patch": "npm run version:patch && npm run publish:build",
-    "release:minor": "npm run version:minor && npm run publish:build", 
+    "release:minor": "npm run version:minor && npm run publish:build",
     "release:major": "npm run version:major && npm run publish:build",
     "publish:build": "npm run clean && npm run build && npm test && npm publish",
     "preversion": "npm test",
